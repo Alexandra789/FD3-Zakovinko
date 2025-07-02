@@ -1,6 +1,6 @@
 .product {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 32px 24px;
     align-items: stretch;
 }
