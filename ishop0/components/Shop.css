@@ -1,6 +1,10 @@
-﻿.shop-sign {
-    border: double blue 2px;
-    background-color: lightgrey;
-    display: inline-block;
-    padding: 50px;
+﻿.shop-sign__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.shop-sign__address {
+    font-size: 18px;
 }
