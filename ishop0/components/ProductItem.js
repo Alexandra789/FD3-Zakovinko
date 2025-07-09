@@ -21,7 +21,7 @@ class ProductItem extends React.Component {
         const { id, name, price, url, quantity, isSelected } = this.props;
 
         return (
-            <tr className={isSelected && "active"} data-row-index={id} onClick={this.rowClicked}>
+            <tr className={isSelected ? "active" : ''} data-row-index={id} onClick={this.rowClicked}>
                 <th>{name}</th>
                 <th>{price}</th>
                 <th>{url}</th>
