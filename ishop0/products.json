@@ -1,37 +1,37 @@
 [
     {
         "id": 1,
-        "title": "Сублимированная дыня",
+        "name": "Сублимированная дыня",
         "price": "15.70",
         "url": "https://basket-02.wbbasket.ru/vol208/part20843/20843030/images/big/1.webp",
-        "stock": 200
+        "quantity": 200
     },
     {
         "id": 2,
-        "title": "Сублимированный персик",
+        "name": "Сублимированный персик",
         "price": "14.32",
         "url": "https://basket-02.wbbasket.ru/vol208/part20846/20846908/images/big/1.webp",
-        "stock": 127
+        "quantity": 127
     },
     {
         "id": 3,
-        "title": "Сублимированный абрикос",
+        "name": "Сублимированный абрикос",
         "price": "15.70",
         "url": "https://basket-02.wbbasket.ru/vol208/part20846/20846339/images/big/1.webp",
-        "stock": 83
+        "quantity": 83
     },
     {
         "id": 4,
-        "title": "Сублимированный перец",
+        "name": "Сублимированный перец",
         "price": "15.34",
         "url": "https://basket-24.wbbasket.ru/vol4161/part416172/416172807/images/big/1.webp",
-        "stock": 94
+        "quantity": 94
     },
     {
         "id": 5,
-        "title": "Сублимированная вишня",
+        "name": "Сублимированная вишня",
         "price": "15.34",
         "url": "https://basket-04.wbbasket.ru/vol449/part44994/44994069/images/big/1.webp",
-        "stock": 94
+        "quantity": 94
     }
 ]
