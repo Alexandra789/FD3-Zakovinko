@@ -17,25 +17,35 @@ class Product extends React.Component {
 
     state = {
         selectedRowIndex: null,
+        deletedRowIndex: null,
+        products: this.props.products
     }
 
     onSelectRow = (rowIndex) => {
         this.setState({ selectedRowIndex: rowIndex });
     }
 
+    onDeleteRow = (rowIndex) => {
+        this.setState({ deletedRowIndex: rowIndex });
+        this.setState(prevState => ({
+            products: prevState.products.filter(item => item.id != rowIndex)
+        }));
+    }
+
     render() {
         const { products } = this.props;
 
-        const productItem = products.map(item =>
+        const productItem = this.state.products.map(item =>
             <ProductItem
                 key={item.id} id={item.id} name={item.name}
                 price={item.price} url={item.url} quantity={item.quantity}
-                cbSelected={this.onSelectRow} isSelected={this.state.selectedRowIndex == item.id} />
+                cbSelected={this.onSelectRow} isSelected={this.state.selectedRowIndex == item.id}
+                cbDeleted={this.onDeleteRow}
+            />
         );
 
         return (
             <table className='product-table'>
-
                 <tbody>
                     <tr>
                         {Object.keys(products[0]).map((item, index) =>
