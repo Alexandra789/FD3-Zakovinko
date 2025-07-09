@@ -1,6 +1,11 @@
-.product {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 32px 24px;
-    align-items: stretch;
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: start;
+}
+
+tr.active{
+    background-color: #ff7f50;
 }
