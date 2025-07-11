@@ -11,27 +11,39 @@ class Filter extends React.Component {
     state = {
         filterValue: '',
         isChecked: false,
+        strings: this.props.strings,
+        stringsInit: this.props.strings,
     }
 
     changeFilterValue = e => {
-        this.setState({ filterValue: e.target.value });
+        let newArrayStringsSort = [...this.props.strings].sort();
+        let arrayForFilter = this.state.isChecked ? newArrayStringsSort : this.props.strings;
+        this.setState({
+            filterValue: e.target.value,
+            strings: arrayForFilter.filter((item) => item.includes(e.target.value)),
+            stringsInit: this.props.strings.filter((item) => item.includes(e.target.value))
+        });
+
     };
 
     toggleIsChecked = () => {
         this.setState({ isChecked: !this.state.isChecked });
+        let newArrayStringsSort = [...this.state.strings].sort();
+        this.setState({
+            strings: !this.state.isChecked ? newArrayStringsSort : this.state.stringsInit
+        })
     }
 
     resetFilter = () => {
-        this.setState({ filterValue: '', isChecked: false });
+        this.setState({
+            filterValue: '',
+            isChecked: false,
+            strings: this.props.strings,
+            stringsInit: this.props.strings
+        });
     }
 
     render() {
-        const { strings } = this.props;
-
-        const filteredList = strings.filter((item) => item.includes(this.state.filterValue));
-
-        this.state.isChecked ? filteredList.sort() : filteredList;
-
         return (
             <div className="filter">
                 <div className="filter__panel">
@@ -41,7 +53,7 @@ class Filter extends React.Component {
                 </div>
                 <div className='filter__result'>
                     {
-                        filteredList.map((item, index) => <p key={index}>{item}</p> )
+                        this.state.strings.map((item, index) => <p key={index}>{item}</p>)
                     }
                 </div>
             </div>
