@@ -27,9 +27,9 @@ class Product extends React.Component {
 
     onDeleteRow = (rowIndex) => {
         this.setState({ deletedRowIndex: rowIndex });
-        this.setState(prevState => ({
-            products: prevState.products.filter(item => item.id != rowIndex)
-        }));
+        this.setState({
+            products: this.state.products.filter(item => item.id != rowIndex)
+        });
     }
 
     render() {
