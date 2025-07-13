@@ -12,26 +12,25 @@ class Filter extends React.Component {
         filterValue: '',
         isChecked: false,
         strings: this.props.strings,
-        stringsInit: this.props.strings,
     }
 
     changeFilterValue = e => {
-        let newArrayStringsSort = [...this.props.strings].sort();
-        let arrayForFilter = this.state.isChecked ? newArrayStringsSort : this.props.strings;
-        this.setState({
-            filterValue: e.target.value,
-            strings: arrayForFilter.filter((item) => item.includes(e.target.value)),
-            stringsInit: this.props.strings.filter((item) => item.includes(e.target.value))
-        });
-
+        this.setState({ filterValue: e.target.value }, this.processStrings);
     };
 
     toggleIsChecked = () => {
-        this.setState({ isChecked: !this.state.isChecked });
-        let newArrayStringsSort = [...this.state.strings].sort();
-        this.setState({
-            strings: !this.state.isChecked ? newArrayStringsSort : this.state.stringsInit
-        })
+        this.setState({ isChecked: !this.state.isChecked }, this.processStrings);
+    }
+
+    processStrings = () => {
+        let strings = this.props.strings;
+        if (this.state.strings) {
+            strings = strings.filter((item) => item.includes(this.state.filterValue))
+        };
+        if (this.state.isChecked) {
+            strings = strings.toSorted();
+        }
+        this.setState({ strings });
     }
 
     resetFilter = () => {
@@ -39,7 +38,6 @@ class Filter extends React.Component {
             filterValue: '',
             isChecked: false,
             strings: this.props.strings,
-            stringsInit: this.props.strings
         });
     }
 
