@@ -8,12 +8,16 @@ class Filter extends React.Component {
         strings: PropTypes.arrayOf(PropTypes.string),
     };
 
-    state = {
+    initState = {
         filterValue: '',
         isChecked: false,
         strings: this.props.strings,
     }
 
+    constructor() {
+        state = this.initState;
+    }
+    
     changeFilterValue = e => {
         this.setState({ filterValue: e.target.value }, this.processStrings);
     };
@@ -34,11 +38,7 @@ class Filter extends React.Component {
     }
 
     resetFilter = () => {
-        this.setState({
-            filterValue: '',
-            isChecked: false,
-            strings: this.props.strings,
-        });
+        this.setState(this.initState);
     }
 
     render() {
