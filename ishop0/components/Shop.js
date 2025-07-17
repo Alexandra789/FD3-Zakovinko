@@ -11,9 +11,9 @@ class Shop extends React.Component {
     products: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
-      quantity: PropTypes.number.isRequired,
+      quantity: PropTypes.string.isRequired,
     })),
   };
 

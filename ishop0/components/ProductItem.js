@@ -5,13 +5,15 @@ class ProductItem extends React.Component {
     static propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        price: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
         url: PropTypes.string.isRequired,
-        quantity: PropTypes.number.isRequired,
+        quantity: PropTypes.string.isRequired,
         cbSelected: PropTypes.func.isRequired,
         isSelected: PropTypes.bool.isRequired,
         cbDeleted: PropTypes.func.isRequired,
         cbGetProductID: PropTypes.func.isRequired,
+        isButtonDisabled: PropTypes.bool.isRequired,
+        cbOpenEditForm: PropTypes.func.isRequired,
     };
 
     rowClicked = e => {
@@ -30,8 +32,14 @@ class ProductItem extends React.Component {
         isRowDelete && this.props.cbDeleted(row.getAttribute('data-row-index'));
     }
 
+    openEditForm = e => {
+      //  e.stopPropagation();
+        const id = e.target.closest('tr').getAttribute('data-row-index');
+        this.props.cbOpenEditForm(id);
+    }
+
     render() {
-        const { id, name, price, url, quantity, isSelected } = this.props;
+        const { id, name, price, url, quantity, isSelected, isButtonDisabled } = this.props;
 
         return (
             <tr className={isSelected ? "active" : ''} data-row-index={id} onClick={this.rowClicked}>
@@ -40,8 +48,8 @@ class ProductItem extends React.Component {
                 <th>{url}</th>
                 <th>{quantity}</th>
                 <th>
-                    <button onClick={this.getProductID}>Edit</button>
-                    <button onClick={this.openConfirmWindow}>Delete</button>
+                    <button onClick={this.openEditForm} disabled={isButtonDisabled}>Edit</button>
+                    <button onClick={this.openConfirmWindow} disabled={isButtonDisabled}>Delete</button>
                 </th>
             </tr>
         );

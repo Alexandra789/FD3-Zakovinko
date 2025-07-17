@@ -2,36 +2,36 @@
     {
         "id": 0,
         "name": "Сублимированная дыня",
-        "price": "15.70",
+        "price": 15,
         "url": "https://basket-02.wbbasket.ru/vol208/part20843/20843030/images/big/1.webp",
-        "quantity": 200
+        "quantity": "200"
     },
     {
         "id": 1,
         "name": "Сублимированный персик",
-        "price": "14.32",
+        "price": 32,
         "url": "https://basket-02.wbbasket.ru/vol208/part20846/20846908/images/big/1.webp",
-        "quantity": 127
+        "quantity": "127"
     },
     {
         "id": 2,
         "name": "Сублимированный абрикос",
-        "price": "15.70",
+        "price": 15,
         "url": "https://basket-02.wbbasket.ru/vol208/part20846/20846339/images/big/1.webp",
-        "quantity": 83
+        "quantity": "83"
     },
     {
         "id": 3,
         "name": "Сублимированный перец",
-        "price": "15.34",
+        "price": 15,
         "url": "https://basket-24.wbbasket.ru/vol4161/part416172/416172807/images/big/1.webp",
-        "quantity": 94
+        "quantity": "94"
     },
     {
         "id": 4,
         "name": "Сублимированная вишня",
-        "price": "15.34",
+        "price": 15,
         "url": "https://basket-04.wbbasket.ru/vol449/part44994/44994069/images/big/1.webp",
-        "quantity": 94
+        "quantity": "94"
     }
 ]

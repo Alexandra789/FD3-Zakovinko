@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import './Product.css';
 import ProductItem from './ProductItem.js';
 import ProductCard from './ProductCard.js';
+import ProductForm from './ProductForm.js';
 
 class Product extends React.Component {
     static propTypes = {
         products: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number.isRequired,
             name: PropTypes.string.isRequired,
-            price: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
             url: PropTypes.string.isRequired,
-            quantity: PropTypes.number.isRequired,
+            quantity: PropTypes.string.isRequired,
         })),
     };
 
@@ -21,7 +22,11 @@ class Product extends React.Component {
         deletedRowIndex: null,
         products: this.props.products,
         displayProductCard: false,
-        displayedProductId: null,
+        displayedProductID: null,
+        displayProductForm: false,
+        idForm: null,
+        isButtonDisabled: false,
+        editProductID: null,
     }
 
     onSelectRow = (rowIndex) => {
@@ -37,8 +42,16 @@ class Product extends React.Component {
 
     getProductID = (id) => {
         if (id) {
-            this.setState({ displayProductCard: true, displayedProductId: id });
+            this.setState({ displayProductCard: true, displayedProductID: id });
         }
+    }
+
+    openAddForm = () => {
+        this.setState({ displayProductForm: true, idForm: 1, isButtonDisabled: true });
+    }
+
+    openEditForm = (id) => {
+        this.setState({ displayProductForm: true, idForm: 2, editProductID: id, isButtonDisabled: true });
     }
 
     render() {
@@ -49,12 +62,15 @@ class Product extends React.Component {
                 key={item.id} id={item.id} name={item.name}
                 price={item.price} url={item.url} quantity={item.quantity}
                 cbSelected={this.onSelectRow} isSelected={this.state.selectedRowIndex == item.id}
-                cbDeleted={this.onDeleteRow} cbGetProductID={this.getProductID}
+                cbDeleted={this.onDeleteRow} cbGetProductID={this.getProductID} isButtonDisabled={this.state.isButtonDisabled}
+                cbOpenEditForm = {this.openEditForm}
             />
         );
 
         return (
             <div className="product">
+                <p>{this.state.displayProductForm ? 'DISPLAY PRODUCT FORM' : '---------'}</p>
+                <p>{this.state.displayProductCard ? 'DISPLAY PRODUCT CARD' : '---------'}</p>
                 <table className='product-table'>
                     <tbody>
                         <tr>
@@ -66,8 +82,9 @@ class Product extends React.Component {
                         {productItem}
                     </tbody>
                 </table>
-                <button>New product</button>
-                {this.state.displayProductCard && <ProductCard products={this.state.products[this.state.displayedProductId]}/>}
+                {this.state.displayProductForm || <button onClick={this.openAddForm}>New product</button>}
+                {this.state.displayProductCard && <ProductCard product={this.state.products[this.state.displayedProductID]} />}
+                {this.state.displayProductForm && <ProductForm form={this.state.idForm} product={this.state.products[this.state.editProductID || 0]} isButtonDisabled={this.state.isButtonDisabled} />}
             </div>
         );
     }
