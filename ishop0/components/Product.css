@@ -9,3 +9,7 @@ td {
 tr.active{
     background-color: #ff7f50;
 }
+
+.product-card{
+    margin-top: 24px;
+}

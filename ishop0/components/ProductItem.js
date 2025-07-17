@@ -11,10 +11,13 @@ class ProductItem extends React.Component {
         cbSelected: PropTypes.func.isRequired,
         isSelected: PropTypes.bool.isRequired,
         cbDeleted: PropTypes.func.isRequired,
+        cbGetProductID: PropTypes.func.isRequired,
     };
 
     rowClicked = e => {
-        this.props.cbSelected(e.currentTarget.getAttribute('data-row-index'));
+        const id = e.currentTarget.getAttribute('data-row-index');
+        this.props.cbSelected(id);
+        this.props.cbGetProductID(id);
     };
 
     openConfirmWindow = e => {
@@ -36,7 +39,10 @@ class ProductItem extends React.Component {
                 <th>{price}</th>
                 <th>{url}</th>
                 <th>{quantity}</th>
-                <th><button onClick={this.openConfirmWindow}>Delete</button></th>
+                <th>
+                    <button onClick={this.getProductID}>Edit</button>
+                    <button onClick={this.openConfirmWindow}>Delete</button>
+                </th>
             </tr>
         );
     }

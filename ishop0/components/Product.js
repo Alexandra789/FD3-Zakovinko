@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Product.css';
 import ProductItem from './ProductItem.js';
+import ProductCard from './ProductCard.js';
 
 class Product extends React.Component {
     static propTypes = {
@@ -18,7 +19,9 @@ class Product extends React.Component {
     state = {
         selectedRowIndex: null,
         deletedRowIndex: null,
-        products: this.props.products
+        products: this.props.products,
+        displayProductCard: false,
+        displayedProductId: null,
     }
 
     onSelectRow = (rowIndex) => {
@@ -32,6 +35,12 @@ class Product extends React.Component {
         });
     }
 
+    getProductID = (id) => {
+        if (id) {
+            this.setState({ displayProductCard: true, displayedProductId: id });
+        }
+    }
+
     render() {
         const { products } = this.props;
 
@@ -40,22 +49,26 @@ class Product extends React.Component {
                 key={item.id} id={item.id} name={item.name}
                 price={item.price} url={item.url} quantity={item.quantity}
                 cbSelected={this.onSelectRow} isSelected={this.state.selectedRowIndex == item.id}
-                cbDeleted={this.onDeleteRow}
+                cbDeleted={this.onDeleteRow} cbGetProductID={this.getProductID}
             />
         );
 
         return (
-            <table className='product-table'>
-                <tbody>
-                    <tr>
-                        {Object.keys(products[0]).map((item, index) =>
-                            index === 0 || <th key={index}>{item}</th>
-                        )}
-                        <th>control</th>
-                    </tr>
-                    {productItem}
-                </tbody>
-            </table>
+            <div className="product">
+                <table className='product-table'>
+                    <tbody>
+                        <tr>
+                            {Object.keys(products[0]).map((item, index) =>
+                                index === 0 || <th key={index}>{item}</th>
+                            )}
+                            <th>control</th>
+                        </tr>
+                        {productItem}
+                    </tbody>
+                </table>
+                <button>New product</button>
+                {this.state.displayProductCard && <ProductCard products={this.state.products[this.state.displayedProductId]}/>}
+            </div>
         );
     }
 }
