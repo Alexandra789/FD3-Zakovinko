@@ -5,3 +5,11 @@ td {
     border-collapse: collapse;
     text-align: start;
 }
+
+th.active{
+    background-color: rgb(40 167 69);
+}
+
+th.blocked{
+    background-color: #dc3545;
+}
