@@ -1,0 +1,34 @@
+[
+    {
+        "id": 0,
+        "surname":"Иванов",
+        "name": "Иван",
+        "patronymic": "Иванович",
+        "balance":200,
+        "status": true
+    },
+    {
+        "id": 1,
+        "surname":"Сидоров",
+        "name": "Сидор",
+        "patronymic": "Сидорович",
+        "balance":250,
+        "status": true
+    },
+    {
+        "id": 2,
+        "surname":"Петров",
+        "name": "Пётр",
+        "patronymic": "Петрович",
+        "balance":180,
+        "status": true
+    },
+    {
+        "id": 3,
+        "surname":"Григорьев",
+        "name": "Григорий",
+        "patronymic": "Григорьевич",
+        "balance":-220,
+        "status": false
+    }
+]
