@@ -8,17 +8,19 @@ import './Filter.css';
 export default function Filter(props) {
     const [filterValue, setFilterValue] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-    const [strings, setStrings] = useState(props.strings);
+    const [stringsList, setStringsList] = useState(props.strings);
 
     return (
         <div className='Filter'>
-            <Controls />
-            <List strings={strings} />
+            <div>{filterValue}</div>
+            <div>{isChecked ? 'checked' : 'ne checked'}</div>
+            <Controls filterValue={filterValue} setFilterValue={setFilterValue} isChecked={isChecked} setIsChecked={setIsChecked} stringsList={stringsList} setStringsList={setStringsList}/>
+            <List stringsList={stringsList}/>
         </div>
     )
 }
 
 Filter.propTypes = {
-    strings: PropTypes.arrayOf(PropTypes.string),
+    stringsList: PropTypes.arrayOf(PropTypes.string),
 };
 
