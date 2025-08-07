@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Mobile.css';
 import Client from './Client';
+import FilterButtons from './FilterButtons';
 
 class Mobile extends React.Component {
   static propTypes = {
@@ -20,13 +21,8 @@ class Mobile extends React.Component {
     const { clients } = this.props;
     return (
       <div className="Mobile">
-        <div className='buttons-wrapper'>
-          <button>Все</button>
-          <button>Активные</button>
-          <button>Заблокированные</button>
-        </div>
+        <FilterButtons/>
         <Client clients={clients} />
-        <button>Добавить клиента</button>
       </div >
     );
   }
