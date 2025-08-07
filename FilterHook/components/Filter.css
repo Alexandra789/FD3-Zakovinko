@@ -1,0 +1,19 @@
+.input {
+    padding: 2px;
+    outline: none;
+    margin: 0 6px 0 2px;
+}
+
+.List {
+    display: inline-block;
+    border: 1px solid black;
+    margin-top: 8px;
+    width: 20%;
+    height: 100px;
+    overflow-y: scroll;
+    padding: 2px;
+}
+
+.List p {
+    margin: 0;
+}
