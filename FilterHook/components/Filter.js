@@ -6,15 +6,11 @@ import List from './List';
 import './Filter.css';
 
 export default function Filter(props) {
-    const [filterValue, setFilterValue] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
     const [stringsList, setStringsList] = useState(props.strings);
 
     return (
         <div className='Filter'>
-            <div>{filterValue}</div>
-            <div>{isChecked ? 'checked' : 'ne checked'}</div>
-            <Controls filterValue={filterValue} setFilterValue={setFilterValue} isChecked={isChecked} setIsChecked={setIsChecked} stringsList={stringsList} setStringsList={setStringsList}/>
+            <Controls stringsList={stringsList} setStringsList={setStringsList} initStringsList={props.strings}/>
             <List stringsList={stringsList}/>
         </div>
     )

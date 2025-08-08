@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 export default function Controls(props) {
-    const { isChecked, filterValue, setFilterValue, setIsChecked, stringsList, setStringsList } = props;
-    const { stringsListState, setStringsListState } = useState(stringsList);
+    const [filterValue, setFilterValue] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
+    const { stringsList, setStringsList, initStringsList } = props;
 
     const toggleIsChecked = () => {
         setIsChecked(!isChecked);
     }
 
     const changeFilterValue = e => {
-        setFilterValue(e.target.value);
+        setFilterValue(e.target.value,);
     };
 
     const resetFilter = () => {
@@ -19,22 +20,19 @@ export default function Controls(props) {
     }
 
     const processStrings = () => {
-        let stringsListNew = stringsList;
+        let stringsListNew = initStringsList;
         if (stringsList) {
             stringsListNew = stringsListNew.filter((item) => item.includes(filterValue))
         };
         if (isChecked) {
             stringsListNew = stringsListNew.toSorted();
         }
-        console.log(stringsListNew);
-        console.log(typeof stringsList)
         setStringsList(stringsListNew);
     }
 
     useEffect(() => {
         processStrings();
-
-    }, [[filterValue, isChecked, initialStrings]])
+    }, [isChecked, filterValue]);
 
     return (
         <div className="Controls">
@@ -46,9 +44,7 @@ export default function Controls(props) {
 }
 
 Controls.propTypes = {
-    isChecked: PropTypes.bool.isRequired,
-    filterValue: PropTypes.string.isRequired,
-    setIsChecked: PropTypes.func.isRequired,
-    setFilterValue: PropTypes.func.isRequired,
     stringsList: PropTypes.arrayOf(PropTypes.string),
+    setStringsList: PropTypes.func.isRequired,
+    initStringsList: PropTypes.arrayOf(PropTypes.string),
 };
