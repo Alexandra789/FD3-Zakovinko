@@ -11,7 +11,7 @@ export default function Controls(props) {
     }
 
     const changeFilterValue = e => {
-        setFilterValue(e.target.value,);
+        setFilterValue(e.target.value);
     };
 
     const resetFilter = () => {

@@ -10,8 +10,8 @@ export default function Filter(props) {
 
     return (
         <div className='Filter'>
-            <Controls stringsList={stringsList} setStringsList={setStringsList} initStringsList={props.strings}/>
-            <List stringsList={stringsList}/>
+            <Controls stringsList={stringsList} setStringsList={setStringsList} initStringsList={props.strings} />
+            <List stringsList={stringsList} />
         </div>
     )
 }
