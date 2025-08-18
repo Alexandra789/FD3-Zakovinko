@@ -13,11 +13,43 @@ class Client extends React.Component {
             status: PropTypes.bool.isRequired,
         })),
     }
+    state = {
+        clients: this.props.clients,
+    }
+
+    setFilter = (filterFlag) => {
+        let clients = this.props.clients;
+        console.log('click');
+        switch (filterFlag) {
+            case 1:
+                clients = this.props.clients;
+                break;
+            case 2:
+                clients = clients.filter(item => item.status);
+                break;
+            case 3:
+                clients = clients.filter(item => !item.status);
+                break;
+        }
+        this.setState({ clients: clients })
+    }
+
+    deleteClient = (id) => {
+        console.log(id);
+        this.setState({
+            clients: this.state.clients.filter(client => client.id != id),
+        });
+    }
 
     render() {
         const { clients } = this.props;
         return (
-            <>
+            <div>
+                <div className="FilterButtons">
+                    <button onClick={() => this.setFilter(1)}>Все</button>
+                    <button onClick={() => this.setFilter(2)}>Активные</button>
+                    <button onClick={() => this.setFilter(3)}>Заблокированные</button>
+                </div>
                 <table className='clients-table'>
                     <tbody>
                         <tr>
@@ -29,7 +61,7 @@ class Client extends React.Component {
                             <th>Редактировать</th>
                             <th>Удалить</th>
                         </tr>
-                        {clients.map(client =>
+                        {this.state.clients.map(client =>
                             <tr key={client.id} data-row-index={client.id}>
                                 <th>{client.surname}</th>
                                 <th>{client.name}</th>
@@ -40,14 +72,14 @@ class Client extends React.Component {
                                     <button>Редактировать</button>
                                 </th>
                                 <th>
-                                    <button>Удалить</button>
+                                    <button onClick={() => this.deleteClient(client.id)}>Удалить</button>
                                 </th>
                             </tr>
                         )}
                     </tbody>
                 </table>
                 <button>Добавить клиента</button>
-            </>
+            </div>
         );
     }
 }

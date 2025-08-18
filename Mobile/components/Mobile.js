@@ -21,7 +21,6 @@ class Mobile extends React.Component {
     const { clients } = this.props;
     return (
       <div className="Mobile">
-        <FilterButtons/>
         <Client clients={clients} />
       </div >
     );
