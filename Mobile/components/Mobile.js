@@ -1,9 +1,8 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
-
 import './Mobile.css';
 import Client from './Client';
-import FilterButtons from './FilterButtons';
+import eventEmitter from './EventEmitter';
 
 class Mobile extends React.Component {
   static propTypes = {
@@ -17,12 +16,31 @@ class Mobile extends React.Component {
     })),
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      clients: this.props.clients
+    };
+  }
+
+  componentDidMount() {
+    eventEmitter.on('clientsUpdated', this.handleClientsUpdate);
+  }
+
+  componentWillUnmount() {
+    eventEmitter.off('clientsUpdated', this.handleClientsUpdate);
+  }
+
+  handleClientsUpdate = (updatedClients) => {
+    this.setState({ clients: updatedClients });
+  }
+
   render() {
-    const { clients } = this.props;
+    console.log('Рендор мобильной компании');
     return (
       <div className="Mobile">
-        <Client clients={clients} />
-      </div >
+        <Client clients={this.state.clients} />
+      </div>
     );
   }
 }
