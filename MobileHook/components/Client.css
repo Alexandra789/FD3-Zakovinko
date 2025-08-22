@@ -1,0 +1,7 @@
+table td.active {
+    background-color: #28a745;
+}
+
+table td.blocked {
+    background-color: #dc3545;
+}
