@@ -6,7 +6,7 @@ import { ProductDetail } from './pages/ProductDetail';
 import { Cart } from './pages/Cart';
 import { Header } from './components/Header/Header';
 
-import "./App.css";
+//import "./App.css";
 //import './App.css'
 //https://fakeapi.platzi.com/?ref=public_apis&utm_medium=website
 
