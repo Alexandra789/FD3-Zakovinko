@@ -6,16 +6,16 @@ export const Footer = () => {
             <div className="container">
                 <div className="footer-content">
                     <div className="footer-section">
-                        <h3>О нас</h3>
-                        <p>Мы предлагаем качественные товары по доступным ценам</p>
+                        <h3>About us</h3>
+                        <p>We offer quality products at affordable prices</p>
                     </div>
                     <div className="footer-section">
-                        <h3>Контакты</h3>
+                        <h3>Contact</h3>
                         <p>Email: info@shop.com</p>
-                        <p>Телефон: +7 (999) 123-45-67</p>
+                        <p>Phone: +7 (999) 123-45-67</p>
                     </div>
                     <div className="footer-section">
-                        <h3>Следите за нами</h3>
+                        <h3>Follow us</h3>
                         <div className="social-links">
                             <a href="#" className="social-link">VK</a>
                             <a href="#" className="social-link">Telegram</a>
@@ -24,7 +24,7 @@ export const Footer = () => {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; 2024 ShopProject. Все права защищены.</p>
+                    <p>&copy; 2024 ShopProject. All rights reserved.</p>
                 </div>
             </div>
         </footer>
