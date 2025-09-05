@@ -17,7 +17,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart count={0} />} />
+            <Route path="/cart" element={<Cart/>} />
           </Routes>
         </main>
         <div className="app-footer">
