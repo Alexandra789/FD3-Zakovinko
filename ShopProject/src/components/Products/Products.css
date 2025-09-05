@@ -10,6 +10,20 @@
     margin-bottom: 24px;
 }
 
+.products-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.products-toolbar .pagination-info {
+    display: flex;
+    gap: 12px;
+    color: #666;
+}
+
 .products-list {
     display: flex;
     flex-wrap: wrap;
@@ -35,6 +49,7 @@
 
 .product-card .product-description {
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -94,6 +109,25 @@
 .product-card .count p {
     min-width: 24px;
     text-align: center;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.pagination .page-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.pagination .page-btn.active,
+.show-all-toggle.active {
+    background-color: #0d6efd;
+    color: #fff;
 }
 
 @media (max-width: 1200px) {
