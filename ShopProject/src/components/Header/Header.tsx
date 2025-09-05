@@ -1,12 +1,38 @@
 import { Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import './Header.css';
+
+function getCartCount(): number {
+    try {
+        const raw = localStorage.getItem('cart-items');
+        const items = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(items)) return 0;
+        return items.reduce((n: number, it: any) => n + (it.quantity || 1), 0);
+    } catch {
+        return 0;
+    }
+}
 
 export const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const [cartCount, setCartCount] = useState<number>(0);
+
+    useEffect(() => {
+        function update() {
+            setCartCount(getCartCount());
+        }
+        update();
+        const handler = () => update();
+        window.addEventListener('cart-updated', handler);
+        window.addEventListener('storage', handler);
+        return () => {
+            window.removeEventListener('cart-updated', handler);
+            window.removeEventListener('storage', handler);
+        };
+    }, []);
 
     const closeMenu = () => setMenuOpen(false);
 
@@ -56,8 +82,9 @@ export const Header = () => {
                     <button className="search-clear" aria-label="Close search" onClick={closeSearch}>×</button>
                 </div>
                 <div className="user-buttons">
-                    <Link to="/cart" onClick={() => { closeMenu(); closeSearch(); }}>
+                    <Link to="/cart" onClick={() => { closeMenu(); closeSearch(); }} className="cart-link">
                         <i className="bi bi-cart3"></i>
+                        {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
                     </Link>
                     <Link to="/" onClick={() => { closeMenu(); closeSearch(); }}>
                         <i className="bi bi-person"></i>
