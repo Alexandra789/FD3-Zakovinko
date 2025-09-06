@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import './Products.css';
 import { Link } from 'react-router-dom';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 
 const fetcher = (url: string): Promise<any> => fetch(url).then((res) => res.json());
 
@@ -30,7 +30,6 @@ function getCartItems() {
 
 function saveCartItems(items: any[]) {
     localStorage.setItem('cart-items', JSON.stringify(items));
-    window.dispatchEvent(new Event('cart-updated'));
 }
 
 function addToCart(product: ProductType) {
@@ -42,6 +41,7 @@ function addToCart(product: ProductType) {
         items.push({ id: product.id, title: product.title, price: product.price, image: product.images?.[0], quantity: 1 });
     }
     saveCartItems(items);
+    window.dispatchEvent(new Event('cart-updated'));
 }
 
 function removeFromCart(productId: number) {
@@ -55,9 +55,16 @@ function removeFromCart(productId: number) {
         items[idx].quantity = nextQty;
     }
     saveCartItems(items);
+    window.dispatchEvent(new Event('cart-updated'));
 }
 
-export const Products = ({ cartItemsCount, setCartItemsCount }: ProductsPropTypes) => {
+function getProductQuantity(productId: number): number {
+    const items = getCartItems();
+    const item = items.find((it: any) => it.id === productId);
+    return item ? (item.quantity || 1) : 0;
+}
+
+export const Products = ({ setCartItemsCount }: ProductsPropTypes) => {
     const BASE_URL = 'https://fakestoreapiserver.reactbd.org/api/products';
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [showAll, setShowAll] = useState<boolean>(false);
@@ -96,13 +103,15 @@ export const Products = ({ cartItemsCount, setCartItemsCount }: ProductsPropType
 
     const handleAddToCart = useCallback((product: ProductType) => {
         addToCart(product);
-        setCartItemsCount(cartItemsCount + 1);
-    }, [cartItemsCount, setCartItemsCount]);
+        const totalCount = getCartItems().reduce((sum, item) => sum + (item.quantity || 1), 0);
+        setCartItemsCount(totalCount);
+    }, [setCartItemsCount]);
 
     const handleRemoveFromCart = useCallback((productId: number) => {
         removeFromCart(productId);
-        setCartItemsCount(Math.max(0, cartItemsCount - 1));
-    }, [cartItemsCount, setCartItemsCount]);
+        const totalCount = getCartItems().reduce((sum, item) => sum + (item.quantity || 1), 0);
+        setCartItemsCount(totalCount);
+    }, [setCartItemsCount]);
 
     const toggleShowAll = useCallback(() => {
         setShowAll(!showAll);
@@ -110,6 +119,17 @@ export const Products = ({ cartItemsCount, setCartItemsCount }: ProductsPropType
             setCurrentPage(1);
         }
     }, [showAll]);
+
+    useEffect(() => {
+        const updateCartCount = () => {
+            const totalCount = getCartItems().reduce((sum, item) => sum + (item.quantity || 1), 0);
+            setCartItemsCount(totalCount);
+        };
+
+        updateCartCount();
+        window.addEventListener('cart-updated', updateCartCount);
+        return () => window.removeEventListener('cart-updated', updateCartCount);
+    }, [setCartItemsCount]);
 
     if (error) return <div className="container">An error has occurred.</div>;
     if (isLoading) return <div className="container">Loading...</div>;
@@ -144,36 +164,38 @@ export const Products = ({ cartItemsCount, setCartItemsCount }: ProductsPropType
                                     <p className="product-description">{product.description}</p></div></Link>
                             <div className="cart-info">
                                 <p><strong>Price: ${product.price}</strong></p>
-                                {cartItemsCount === 0 && (
-                                    <button
-                                        className="btn btn-secondary"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            handleAddToCart(product);
-                                        }}
-                                    >
-                                        <i className="bi bi-cart3"></i>
-                                    </button>
-                                )}
-                                {cartItemsCount !== 0 && (
-                                    <div className="count">
-                                        <button
-                                            className="btn btn-secondary"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleRemoveFromCart(product.id);
-                                            }}
-                                        >-</button>
-                                        <p>{cartItemsCount}</p>
+                                {(() => {
+                                    const productQuantity = getProductQuantity(product.id);
+                                    return productQuantity === 0 ? (
                                         <button
                                             className="btn btn-secondary"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 handleAddToCart(product);
                                             }}
-                                        >+</button>
-                                    </div>
-                                )}
+                                        >
+                                            <i className="bi bi-cart3"></i>
+                                        </button>
+                                    ) : (
+                                        <div className="count">
+                                            <button
+                                                className="btn btn-secondary"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleRemoveFromCart(product.id);
+                                                }}
+                                            >-</button>
+                                            <p>{productQuantity}</p>
+                                            <button
+                                                className="btn btn-secondary"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleAddToCart(product);
+                                                }}
+                                            >+</button>
+                                        </div>
+                                    );
+                                })()}
                             </div>
                         </div>
                     ))}

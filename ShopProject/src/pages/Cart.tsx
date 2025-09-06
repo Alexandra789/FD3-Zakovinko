@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import './Cart.css';
 
 export const Cart = () => {
     const [items, setItems] = useState<any[]>([]);
+    const [removingItems, setRemovingItems] = useState<Set<number>>(new Set());
 
     function loadCart() {
         try {
@@ -22,12 +23,34 @@ export const Cart = () => {
     function saveCart(next: any[]) {
         localStorage.setItem('cart-items', JSON.stringify(next));
         setItems(next);
+        window.dispatchEvent(new Event('cart-updated'));
     }
 
-    function handleRemove(id: number) {
-        const next = items.filter((it) => it.id !== id);
+    const handleRemove = useCallback((id: number) => {
+        setRemovingItems(prev => new Set(prev).add(id));
+        
+        setTimeout(() => {
+            const next = items.filter((it) => it.id !== id);
+            saveCart(next);
+            setRemovingItems(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(id);
+                return newSet;
+            });
+        }, 300);
+    }, [items]);
+
+    const handleUpdateQuantity = useCallback((id: number, newQuantity: number) => {
+        if (newQuantity <= 0) {
+            handleRemove(id);
+            return;
+        }
+        
+        const next = items.map(item => 
+            item.id === id ? { ...item, quantity: newQuantity } : item
+        );
         saveCart(next);
-    }
+    }, [items, handleRemove]);
 
     function handleClear() {
         saveCart([]);
@@ -57,14 +80,40 @@ export const Cart = () => {
                     <div className="cart-grid">
                         <div className="cart-list">
                             {items.map((item) => (
-                                <div key={item.id} className="cart-item">
-                                    <img src={item.image} alt={item.title} />
+                                <div 
+                                    key={item.id} 
+                                    className={`cart-item ${removingItems.has(item.id) ? 'removing' : ''}`}
+                                >
+                                    <div className="item-image">
+                                        <img src={item.image || item.images?.[0]} alt={item.title} />
+                                    </div>
                                     <div className="info">
                                         <h3>{item.title}</h3>
-                                        <p>Price: ${item.price} × {item.quantity || 1}</p>
+                                        <p className="price">Price: ${item.price}</p>
+                                        <div className="quantity-controls">
+                                            <button 
+                                                className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => handleUpdateQuantity(item.id, (item.quantity || 1) - 1)}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="quantity">{item.quantity || 1}</span>
+                                            <button 
+                                                className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => handleUpdateQuantity(item.id, (item.quantity || 1) + 1)}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
                                         <p className="subtotal">Subtotal: ${((item.price || 0) * (item.quantity || 1)).toFixed(2)}</p>
                                     </div>
-                                    <button className="btn btn-secondary" onClick={() => handleRemove(item.id)}>Remove</button>
+                                    <button 
+                                        className="btn btn-danger btn-sm" 
+                                        onClick={() => handleRemove(item.id)}
+                                        disabled={removingItems.has(item.id)}
+                                    >
+                                        <i className="bi bi-trash"></i>
+                                    </button>
                                 </div>
                             ))}
                         </div>
