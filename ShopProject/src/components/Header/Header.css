@@ -1,7 +1,7 @@
 .Header {
     display: flex;
     align-items: center;
-    padding: 16px 24px;
+    padding: 16px 0;
     gap: 16px;
     background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -21,8 +21,6 @@
     gap: 16px;
     justify-content: space-between;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .Header h1 {
@@ -112,7 +110,7 @@
 
 @media (max-width: 995px) {
     .Header {
-        padding: 12px 16px;
+        padding: 12px 0;
         gap: 12px;
     }
 
@@ -136,7 +134,7 @@
 
 @media (max-width: 850px) {
     .Header {
-        padding: 12px 16px;
+        padding: 12px 0;
         gap: 8px;
     }
 
@@ -152,7 +150,7 @@
 
 @media (max-width: 768px) {
     .Header {
-        padding: 12px 16px;
+        padding: 12px 0;
         gap: 8px;
     }
 
@@ -167,12 +165,12 @@
 
     .menu-toggle {
         display: inline-block;
-        order: -1; /* Кнопка меню слева */
+        order: -1; 
     }
 
 
     .user-buttons {
-        order: 1; /* Кнопки пользователя справа */
+        order: 1;
     }
 
     .navigation {
@@ -219,7 +217,7 @@
 
 @media (max-width: 480px) {
     .Header {
-        padding: 8px 12px;
+        padding: 8px 0;
         gap: 6px;
         flex-wrap: nowrap;
     }
@@ -235,11 +233,11 @@
     }
 
     .menu-toggle {
-        order: -1; /* Кнопка меню слева */
+        order: -1;
     }
 
     .user-buttons {
-        order: 1; /* Кнопки пользователя справа */
+        order: 1;
     }
 
 
