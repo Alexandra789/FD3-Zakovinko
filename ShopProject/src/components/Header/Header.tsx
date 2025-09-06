@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import './Header.css';
 
@@ -16,8 +16,6 @@ function getCartCount(): number {
 
 export const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
-    const searchInputRef = useRef<HTMLInputElement>(null);
     const [cartCount, setCartCount] = useState<number>(0);
 
     useEffect(() => {
@@ -36,33 +34,19 @@ export const Header = () => {
 
     const closeMenu = () => setMenuOpen(false);
 
-    const openSearch = () => {
-        setSearchOpen(true);
-        setMenuOpen(false);
-        requestAnimationFrame(() => searchInputRef.current?.focus());
-    };
-
-    const closeSearch = () => {
-        setSearchOpen(false);
-        if (searchInputRef.current) {
-            searchInputRef.current.value = '';
-            searchInputRef.current.blur();
-        }
-    };
-
     return (
         <div className="Header">
             <div className="container">
-                <Link to="/" onClick={() => { closeMenu(); closeSearch(); }}>
+                <Link to="/" onClick={closeMenu}>
                     <h1 className="title">Shop.co</h1>
                 </Link>
                 <nav className={`navigation ${menuOpen ? 'open' : ''}`}>
-                    <Link to="/" onClick={() => { closeMenu(); closeSearch(); }}>On sale</Link>
-                    <Link to="/" onClick={() => { closeMenu(); closeSearch(); }}>New Arrivals</Link>
-                    <Link to="/" onClick={() => { closeMenu(); closeSearch(); }}>Brands</Link>
+                    <Link to="/" onClick={closeMenu}>On sale</Link>
+                    <Link to="/" onClick={closeMenu}>New Arrivals</Link>
+                    <Link to="/" onClick={closeMenu}>Brands</Link>
                 </nav>
                 <button
-                    className={`menu-toggle ${menuOpen ? 'active' : ''} ${searchOpen ? 'hidden' : ''}`}
+                    className={`menu-toggle ${menuOpen ? 'active' : ''}`}
                     aria-label="Toggle navigation"
                     aria-expanded={menuOpen}
                     onClick={() => setMenuOpen(prev => !prev)}
@@ -71,22 +55,12 @@ export const Header = () => {
                     <span className="bar"></span>
                     <span className="bar"></span>
                 </button>
-                <div className={`search ${searchOpen ? 'open' : ''}`}>
-                    <i className="bi bi-search" onClick={openSearch}></i>
-                    <input
-                        ref={searchInputRef}
-                        type="text"
-                        placeholder="Search for products..."
-                        onFocus={openSearch}
-                    />
-                    <button className="search-clear" aria-label="Close search" onClick={closeSearch}>×</button>
-                </div>
                 <div className="user-buttons">
-                    <Link to="/cart" onClick={() => { closeMenu(); closeSearch(); }} className="cart-link">
+                    <Link to="/cart" onClick={closeMenu} className="cart-link">
                         <i className="bi bi-cart3"></i>
                         {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
                     </Link>
-                    <Link to="/" onClick={() => { closeMenu(); closeSearch(); }}>
+                    <Link to="/" onClick={closeMenu}>
                         <i className="bi bi-person"></i>
                     </Link>
                 </div>

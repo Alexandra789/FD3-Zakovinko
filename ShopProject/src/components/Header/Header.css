@@ -1,21 +1,28 @@
 .Header {
     display: flex;
     align-items: center;
-    padding: 16px 0;
-    gap: 32px;
+    padding: 16px 24px;
+    gap: 16px;
     background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
     justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .Header .container {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 16px;
     justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .Header h1 {
@@ -42,53 +49,6 @@
     margin-bottom: 0;
 }
 
-.search {
-    flex: 1 1 auto;
-    text-align: center;
-    position: relative;
-    max-width: 450px;
-}
-
-.search i {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #666;
-    z-index: 2;
-}
-
-.search input {
-    border-radius: 20px;
-    border: none;
-    height: 48px;
-    padding: 0 36px 0 48px;
-    width: 100%;
-    background: #f0f0f0;
-    outline: none;
-    z-index: 1;
-}
-
-.search input:focus {
-    background: #e8e8e8;
-}
-
-.search .search-clear {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: transparent;
-    font-size: 18px;
-    color: #666;
-    cursor: pointer;
-    display: none;
-}
-
-.search.open .search-clear {
-    display: inline-block;
-}
 
 .user-buttons {
     display: flex;
@@ -151,8 +111,17 @@
 }
 
 @media (max-width: 995px) {
-    .user-buttons, .Header .container {
-        gap: 24px;
+    .Header {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .Header .container {
+        gap: 12px;
+    }
+
+    .user-buttons {
+        gap: 16px;
     }
 
     .navigation {
@@ -163,33 +132,52 @@
         font-size: 14px;
     }
 
-    .search {
-        max-width: 200px;
-    }
 }
 
 @media (max-width: 850px) {
     .Header {
-        gap: 16px;
+        padding: 12px 16px;
+        gap: 8px;
+    }
+
+    .Header .container {
+        gap: 8px;
     }
 
     .user-buttons {
-        gap: 16px;
+        gap: 12px;
     }
+
 }
 
 @media (max-width: 768px) {
-    .Products {
-        margin-top: 24px;
+    .Header {
+        padding: 12px 16px;
+        gap: 8px;
+    }
+
+    .Header .container {
+        gap: 8px;
+        justify-content: space-between;
+    }
+
+    .Header h1 {
+        font-size: 1.4rem;
     }
 
     .menu-toggle {
         display: inline-block;
+        order: -1; /* Кнопка меню слева */
+    }
+
+
+    .user-buttons {
+        order: 1; /* Кнопки пользователя справа */
     }
 
     .navigation {
         position: absolute;
-        top: 64px;
+        top: 100%;
         left: 0;
         right: 0;
         display: flex;
@@ -216,75 +204,60 @@
 
     .Header .navigation a {
         width: 100%;
+        padding: 8px 0;
+    }
+
+    .search {
+        max-width: 120px;
+        min-width: 80px;
+    }
+
+    .user-buttons {
+        gap: 8px;
     }
 }
 
 @media (max-width: 480px) {
     .Header {
+        padding: 8px 12px;
+        gap: 6px;
         flex-wrap: nowrap;
-        gap: 8px;
     }
 
-    .title {
+    .Header .container {
+        gap: 6px;
+        justify-content: space-between;
+    }
+
+    .Header h1 {
         font-size: 1.2rem;
+        white-space: nowrap;
     }
 
-    .search {
-        max-width: none;
-        width: 44px;
-        height: 44px;
-        flex: 0 0 auto;
-        border-radius: 50%;
-        background: #f0f0f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: width 0.3s ease, border-radius 0.3s ease, background 0.3s ease;
-    }
-
-    .search i {
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #333;
-        pointer-events: auto;
-        cursor: pointer;
-    }
-
-    .search input {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        opacity: 0;
-        padding: 0 40px 0 44px;
-        height: 44px;
-        border-radius: 22px;
-        transition: width 0.3s ease, opacity 0.2s ease;
-        background: #f0f0f0;
-    }
-
-    .search.open {
-        max-width: 200px;
-        width: 100%;
-        border-radius: 24px;
-    }
-
-    .search.open i {
-        left: 12px;
-        transform: translateY(-50%);
-        color: #666;
-    }
-
-    .search.open input {
-        width: 100%;
-        opacity: 1;
+    .menu-toggle {
+        order: -1; /* Кнопка меню слева */
     }
 
     .user-buttons {
-        gap: 12px;
+        order: 1; /* Кнопки пользователя справа */
+    }
+
+
+    .user-buttons {
+        gap: 8px;
+    }
+
+    .user-buttons i {
+        font-size: 16px;
     }
 
     .Header .menu-toggle.hidden {
         display: none;
+    }
+
+    .menu-toggle .bar {
+        width: 18px;
+        height: 2px;
+        margin: 4px 0;
     }
 }
